@@ -1,0 +1,7 @@
+{
+  "GET": {
+    "/api/helloworld": {
+      "roles": ["admin"]
+    }
+  }
+}

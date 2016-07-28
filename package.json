@@ -1,0 +1,33 @@
+{
+  "name": "express-roles-authorization",
+  "description": "Express middleware for simple authorization with multiple roles based on Express-style routes.",
+  "keywords": [
+    "expresss ",
+    "middleware",
+    "roles",
+    "authorization"
+  ],
+  "author": "Markus Knittig <markus@myd0.de>",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mknittig/express-roles-authorization.git"
+  },
+  "license": "MIT",
+  "main": "lib/index",
+  "files": [
+    "lib/"
+  ],
+  "scripts": {
+    "test": "node_modules/mocha/bin/mocha test/* -R nyan --recursive"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "path-to-regexp": "^1.2.0"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^2.5.3",
+    "sinon": "^1.17.4"
+  }
+}
