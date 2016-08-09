@@ -66,7 +66,7 @@ Arguments:
         * `next` (express.Next): *express* Next object.
         * `callback` (Function): Returns a callback with the roles of the user. Signature: `callback(err, roles) => void`.
             * `err` (Error): return an Error if if an error occurred, otherwise yield `null` here.
-            * `roles` (Array): returns an array with all roles of the authenticated user. Empty, null or undefined for unauthenticated user .
+            * `roles` (Array): returns an array with all roles of the authenticated user. null or undefined for unauthenticated user.
 
 
 ## Contributing
