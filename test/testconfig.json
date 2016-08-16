@@ -1,7 +1,13 @@
 {
   "GET": {
-    "/api/helloworld": {
+    "/needsspecficrole": {
       "roles": ["admin"]
+    },
+    "/open": {
+      "roles": null
+    },
+    "/needsauthentication": {
+      "roles": []
     }
   }
 }

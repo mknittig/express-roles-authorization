@@ -34,13 +34,19 @@ The `Roles` class needs a `config` parameter with contains the permissions mappi
 Either via a JSON file with `permissionsMapFile` or directly as a Javascript object with `permissionsMap`.
 
 The mapping is structured as a hash object with the HTTP verbs on top-level. Under the HTTP verb Express-style routes
-can be defined with contains a `roles` parameter with the permitted roles. If this is empty or unspecified anyone can
-access the defined route. E.g.:
+can be defined with contains a `roles` parameter with the permitted roles. If this is null or unspecified anyone can
+access the defined route. An empty route needs authentication. E.g.:
 
     {
       "GET": {
-        "/helloworld": {
+        "/needsspecficroles": {
           "roles": ["user", "admin"]
+        },
+        "/open": {
+           "roles": null
+        },
+        "/needsauthentication": {
+            "roles": []
         }
       },
       "POST": {
