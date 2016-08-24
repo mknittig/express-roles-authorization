@@ -15,9 +15,12 @@ describe('Express roles authorization middleware', function () {
 
   it('should check authorization and get permitted', function () {
     req = { method: 'GET', _parsedUrl: { pathname: '/needsspecficrole' } };
+    req.login = function (user, callback) {
+      callback();
+    };
     var roles = new Roles({
       permissionsMapFile: __dirname +'/testconfig.json',
-      authenticationFunction: function (req, res, next, cb) { cb(null, ['admin']) }
+      authenticationFunction: function (req, res, next, cb) { cb(null, { roles: ['admin'] }) }
     });
     var authCheck = roles.checkAuth(req, res, next);
     expect(nextCalled).to.be.ok()
@@ -25,6 +28,9 @@ describe('Express roles authorization middleware', function () {
 
   it('should check authorization and get denied', function () {
     req = { method: 'GET', _parsedUrl: { pathname: '/needsspecficrole' } };
+    req.login = function (user, callback) {
+      callback();
+    };
     var sendCalled = false;
     res = {
       status: function (status) {
@@ -38,7 +44,7 @@ describe('Express roles authorization middleware', function () {
     };
     var roles = new Roles({
       permissionsMapFile: __dirname +'/testconfig.json',
-      authenticationFunction: function (req, res, next, cb) { cb(null, ['user']) }
+      authenticationFunction: function (req, res, next, cb) { cb(null, { roles: ['user'] }) }
     });
     var authCheck = roles.checkAuth(req, res, next);
     expect(nextCalled).to.not.be.ok();
@@ -47,9 +53,12 @@ describe('Express roles authorization middleware', function () {
 
   it('should permit unauthenticated user if roles are null', function () {
     req = { method: 'GET', _parsedUrl: { pathname: '/open' } };
+    req.login = function (user, callback) {
+      callback();
+    };
     var roles = new Roles({
       permissionsMapFile: __dirname +'/testconfig.json',
-      authenticationFunction: function (req, res, next, cb) { cb(null, null) }
+      authenticationFunction: function (req, res, next, cb) { cb(null, {}) }
     });
     var authCheck = roles.checkAuth(req, res, next);
     expect(nextCalled).to.be.ok()
@@ -57,9 +66,12 @@ describe('Express roles authorization middleware', function () {
 
   it('should permit authenticated user if roles are empty', function () {
     req = { method: 'GET', _parsedUrl: { pathname: '/needsauthentication' } };
+    req.login = function (user, callback) {
+      callback();
+    };
     var roles = new Roles({
       permissionsMapFile: __dirname +'/testconfig.json',
-      authenticationFunction: function (req, res, next, cb) { cb(null, []) }
+      authenticationFunction: function (req, res, next, cb) { cb(null, { roles: [] }) }
     });
     var authCheck = roles.checkAuth(req, res, next);
     expect(nextCalled).to.be.ok()
@@ -67,6 +79,9 @@ describe('Express roles authorization middleware', function () {
 
   it('should deny unauthenticated user', function () {
     req = { method: 'GET', _parsedUrl: { pathname: '/needsauthentication' } };
+    req.login = function (user, callback) {
+      callback();
+    };
     var sendCalled = false;
     res = {
       status: function (status) {
@@ -80,7 +95,7 @@ describe('Express roles authorization middleware', function () {
     };
     var roles = new Roles({
       permissionsMapFile: __dirname +'/testconfig.json',
-      authenticationFunction: function (req, res, next, cb) { cb(null, null) }
+      authenticationFunction: function (req, res, next, cb) { cb(null, {}) }
     });
     var authCheck = roles.checkAuth(req, res, next);
     expect(nextCalled).to.not.be.ok()

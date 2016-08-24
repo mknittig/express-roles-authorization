@@ -21,7 +21,7 @@ Example with Express and [Passport](http://passportjs.org/):
       permissionsMapFile: 'permissions.json',
       authenticationFunction: function (req, res, next, callback) {
         passport.authenticate('local', function (err, user) {
-          return callback(err, user.roles);
+          return callback(err, user);
         })(req, res, next);
       }
     });
@@ -66,13 +66,14 @@ Arguments:
 * `config` (Object):
     * `permissionsMapFile` (String): Path to the json file with the permission mapping.
     * `permissionsMap` (Object, alternative to permissionsMapFile): Javascript object with the permission mapping.
+    * `rolesProperty` (String): Property which contains the roles in the user object.
     * `authenticationFunction` (Function): Callback to be called for authentication handling. Handle authentication errors.
         * `req` (express.Request): *express* Request object.
         * `res` (express.Response): *express* Response object.
         * `next` (express.Next): *express* Next object.
         * `callback` (Function): Returns a callback with the roles of the user. Signature: `callback(err, roles) => void`.
             * `err` (Error): return an Error if if an error occurred, otherwise yield `null` here.
-            * `roles` (Array): returns an array with all roles of the authenticated user. null or undefined for unauthenticated user.
+            * `user` (Object): returns the user object with contains the roles accessed via the `rolesProperty`. roles are null or undefined for unauthenticated user.
 
 
 ## Contributing
